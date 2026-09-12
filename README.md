@@ -47,7 +47,7 @@ workflow-engine/
         └── features/
             └── kanban/             # Angular Material CDK Board Component
 ```
-## Start System with
+## 4. System starts with following 
 
 1. **Start Database Container:** `docker compose up -d`
 2. **Start Scala Pekko HTTP Backend:** `cd backend-scala; sbt run`
