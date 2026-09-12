@@ -1,0 +1,78 @@
+<div class="kanban-wrapper">
+  <div class="header">
+    <h1>Enterprise Workflow Engine</h1>
+    <div class="add-task-container">
+      <input type="text" [(ngModel)]="newTaskTitle" placeholder="What needs to be done?" (keyup.enter)="addTask()">
+      <button class="btn-primary" (click)="addTask()">+ Add Task</button>
+    </div>
+  </div>
+
+  <div class="board" cdkDropListGroup>
+    
+    <!-- TODO COLUMN -->
+    <div class="column glass-panel">
+      <div class="column-header">
+        <h2>To Do</h2>
+        <span class="badge" *ngIf="(todoTasks$ | async) as todos">{{ todos.length }}</span>
+      </div>
+      <div class="task-list"
+           cdkDropList
+           [cdkDropListData]="(todoTasks$ | async)"
+           (cdkDropListDropped)="drop($event, 'TODO')">
+        <div class="task-card" *ngFor="let task of todoTasks$ | async" cdkDrag>
+          <div class="task-content">
+            <h3>{{ task.title }}</h3>
+            <p *ngIf="task.description">{{ task.description }}</p>
+          </div>
+          <div class="task-footer">
+            <span class="task-id">#{{ task.id }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS COLUMN -->
+    <div class="column glass-panel">
+      <div class="column-header">
+        <h2>In Progress</h2>
+        <span class="badge in-progress" *ngIf="(inProgressTasks$ | async) as inProgress">{{ inProgress.length }}</span>
+      </div>
+      <div class="task-list"
+           cdkDropList
+           [cdkDropListData]="(inProgressTasks$ | async)"
+           (cdkDropListDropped)="drop($event, 'IN_PROGRESS')">
+        <div class="task-card" *ngFor="let task of inProgressTasks$ | async" cdkDrag>
+          <div class="task-content">
+            <h3>{{ task.title }}</h3>
+            <p *ngIf="task.description">{{ task.description }}</p>
+          </div>
+          <div class="task-footer">
+            <span class="task-id">#{{ task.id }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONE COLUMN -->
+    <div class="column glass-panel">
+      <div class="column-header">
+        <h2>Done</h2>
+        <span class="badge done" *ngIf="(doneTasks$ | async) as doneList">{{ doneList.length }}</span>
+      </div>
+      <div class="task-list"
+           cdkDropList
+           [cdkDropListData]="(doneTasks$ | async)"
+           (cdkDropListDropped)="drop($event, 'DONE')">
+        <div class="task-card done-card" *ngFor="let task of doneTasks$ | async" cdkDrag>
+          <div class="task-content">
+            <h3>{{ task.title }}</h3>
+          </div>
+          <div class="task-footer">
+            <span class="task-id">#{{ task.id }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
