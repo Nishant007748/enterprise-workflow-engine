@@ -47,35 +47,7 @@ workflow-engine/
         └── features/
             └── kanban/             # Angular Material CDK Board Component
 ```
-## System Architecture Diagram
-
-```mermaid
-graph LR
-    UI[Angular UI (Kanban Board)] -->|dispatches| NG[NgRx Store]
-    NG -->|selects| UI
-    NG -->|effects| API[HTTP Service]
-
-    API -->|calls| REST[TaskRoutes (Pekko HTTP)]
-    REST -->|asks| Actor[TaskStateActor (Pekko Typed)]
-    Actor -->|queries| DB[Slick DAO]
-    DB -->|writes/reads| PG[PostgreSQL]
-
-    UI -->|drag-drop| NG
-    NG -->|updateTaskState| API
-    API -->|PUT /tasks/:id/state| REST
-    REST -->|UpdateTaskState| Actor
-    Actor -->|run DB update| DB
-    DB -->|returns updated task| Actor
-    Actor -->|reply| REST
-    REST -->|response| API
-    API -->|dispatch success| NG
-    NG -->|state update| UI
-
-    classDef front fill:#0d1117,color:#c9d1d9,stroke:#58a6ff;
-    classDef back fill:#1c2128,color:#c9d1d9,stroke:#fcd34d;
-    UI,NG,API,REST,Actor,DB,PG class front;
-    Actor,DB,PG class back;
-```
+## Start System with
 
 1. **Start Database Container:** `docker compose up -d`
 2. **Start Scala Pekko HTTP Backend:** `cd backend-scala; sbt run`
