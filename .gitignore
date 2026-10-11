@@ -6,13 +6,13 @@ node_modules/
 npm-debug.log
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
 # Scala / sbt
 target/
 .project/
 .idea/
 *.class
 *.jar
+!sbt/bin/sbt-launch.jar
 *.war
 *.ear
 *.log
@@ -27,3 +27,8 @@ docker-compose.override.yml
 *.suo
 *.user
 *.vsconfig
+# Local environment files
+.env
+.env.*
+!.env.example
+sbt/bin/sbt-launch.jar

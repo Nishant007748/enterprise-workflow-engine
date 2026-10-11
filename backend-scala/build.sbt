@@ -1,6 +1,8 @@
-﻿name := "workflow-backend"
+name := "workflow-backend"
 version := "1.0.0"
 scalaVersion := "2.13.12"
+
+Compile / run / fork := true
 
 libraryDependencies ++= Seq(
   "org.apache.pekko" %% "pekko-actor-typed" % "1.0.2",
