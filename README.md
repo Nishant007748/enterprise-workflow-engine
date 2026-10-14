@@ -43,31 +43,6 @@ A full-stack task management application with an Angular Kanban board, a Scala H
 | Database | PostgreSQL 16 |
 | Local database runtime | Docker Compose |
 
-## System architecture
-
-```mermaid
-flowchart LR
-    Browser["Browser\nAngular Kanban UI"]
-    Store["NgRx Store\nActions · Reducer · Effects"]
-    Proxy["Angular dev proxy\n/api → localhost:8080"]
-    Http["Pekko HTTP\nREST routes"]
-    Actor["Pekko Typed\nTaskStateActor"]
-    Slick["Slick + HikariCP"]
-    Db["PostgreSQL 16\nworkflow_db"]
-
-    Browser --> Store
-    Store --> Proxy
-    Proxy --> Http
-    Http --> Actor
-    Actor --> Slick
-    Slick --> Db
-    Db --> Slick
-    Slick --> Actor
-    Actor --> Http
-    Http --> Proxy
-    Proxy --> Store
-    Store --> Browser
-```
 
 The Angular application is served at `http://localhost:4200`. During development, its proxy forwards requests under `/api` to the backend at `http://localhost:8080`. The backend exposes task routes, sends operations to a Pekko Typed actor, and uses Slick to read or write PostgreSQL. On startup, the backend creates the task schema before binding the HTTP server.
 
